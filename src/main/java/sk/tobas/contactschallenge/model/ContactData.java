@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.IOException;
 
 public class ContactData {
@@ -45,25 +46,28 @@ public class ContactData {
     // load contacts
     public void loadContacts() throws IOException, SAXException, ParserConfigurationException {
         // get xml file
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse(filename);
-        document.getDocumentElement().normalize();
+        File file = new File(filename);
+        if (file.exists()) {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(filename);
+            document.getDocumentElement().normalize();
 
-        // get nodes wit contact tag name
-        NodeList nodeList = document.getElementsByTagName("contact");
+            // get nodes wit contact tag name
+            NodeList nodeList = document.getElementsByTagName("contact");
 
-        // create contact from each contact node and store to ObservableList contacts
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            NodeList chNodes = node.getChildNodes();
-            Contact contact = new Contact();
-            contact.setFirstName(chNodes.item(0).getTextContent());
-            contact.setLastName(chNodes.item(1).getTextContent());
-            contact.setPhoneNumber(chNodes.item(2).getTextContent());
-            contact.setNote(chNodes.item(3).getTextContent());
-            System.out.println(contact.getFirstName());
-            contacts.add(contact);
+            // create contact from each contact node and store to ObservableList contacts
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                NodeList chNodes = node.getChildNodes();
+                Contact contact = new Contact();
+                contact.setFirstName(chNodes.item(0).getTextContent());
+                contact.setLastName(chNodes.item(1).getTextContent());
+                contact.setPhoneNumber(chNodes.item(2).getTextContent());
+                contact.setNote(chNodes.item(3).getTextContent());
+                System.out.println(contact.getFirstName());
+                contacts.add(contact);
+            }
         }
     }
 
@@ -78,29 +82,31 @@ public class ContactData {
         document.appendChild(rootElement);
 
         // loop contact and create node for each contact
-        for (Contact cont : contacts) {
-            Element contact = document.createElement("contact");
-            rootElement.appendChild(contact);
+        if (contacts.size() != 0) {
+            for (Contact cont : contacts) {
+                Element contact = document.createElement("contact");
+                rootElement.appendChild(contact);
 
-            // firstname element
-            Element fName = document.createElement("firstname");
-            fName.appendChild(document.createTextNode(cont.getFirstName()));
-            contact.appendChild(fName);
+                // firstname element
+                Element fName = document.createElement("firstname");
+                fName.appendChild(document.createTextNode(cont.getFirstName()));
+                contact.appendChild(fName);
 
-            // lastname element
-            Element lName = document.createElement("lastname");
-            lName.appendChild(document.createTextNode(cont.getLastName()));
-            contact.appendChild(lName);
+                // lastname element
+                Element lName = document.createElement("lastname");
+                lName.appendChild(document.createTextNode(cont.getLastName()));
+                contact.appendChild(lName);
 
-            // phonenumber element
-            Element pNumber = document.createElement("phonenumber");
-            pNumber.appendChild(document.createTextNode(cont.getPhoneNumber()));
-            contact.appendChild(pNumber);
+                // phonenumber element
+                Element pNumber = document.createElement("phonenumber");
+                pNumber.appendChild(document.createTextNode(cont.getPhoneNumber()));
+                contact.appendChild(pNumber);
 
-            // note element
-            Element note = document.createElement("note");
-            note.appendChild(document.createTextNode(cont.getNote()));
-            contact.appendChild(note);
+                // note element
+                Element note = document.createElement("note");
+                note.appendChild(document.createTextNode(cont.getNote()));
+                contact.appendChild(note);
+            }
         }
 
         // write to xml file
