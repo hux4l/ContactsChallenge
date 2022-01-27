@@ -8,11 +8,11 @@ public class Contact {
     private SimpleStringProperty phoneNumber;
     private SimpleStringProperty note;
 
-    public Contact(String firstName, String lastName, String phoneNumber, String note) {
-        this.firstName.set(firstName);
-        this.lastName.set(lastName);
-        this.phoneNumber.set(phoneNumber);
-        this.note.set(note);
+    public Contact() {
+        this.firstName = new SimpleStringProperty();
+        this.lastName = new SimpleStringProperty();
+        this.phoneNumber = new SimpleStringProperty();
+        this.note = new SimpleStringProperty();
     }
 
     public String getFirstName() {
