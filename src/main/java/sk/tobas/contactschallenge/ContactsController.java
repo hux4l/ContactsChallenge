@@ -3,7 +3,7 @@ package sk.tobas.contactschallenge;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ContactsController {
     @FXML
     private Label welcomeText;
 
