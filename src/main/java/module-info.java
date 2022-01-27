@@ -6,4 +6,5 @@ module sk.tobas.contactschallenge {
 
     opens sk.tobas.contactschallenge to javafx.fxml;
     exports sk.tobas.contactschallenge;
+    exports sk.tobas.contactschallenge.model;
 }

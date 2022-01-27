@@ -13,6 +13,10 @@ public class ContactsApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ContactsApplication.class.getResource("contacts.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+        ContactsController controller = fxmlLoader.getController();
+        controller.listContacts();
+
         stage.setTitle("My Contacts");
         stage.setScene(scene);
         stage.show();
@@ -24,6 +28,7 @@ public class ContactsApplication extends Application {
 
     @Override
     public void init() throws Exception {
+        super.init();
         ContactData.getInstance().loadContacts();
     }
 
