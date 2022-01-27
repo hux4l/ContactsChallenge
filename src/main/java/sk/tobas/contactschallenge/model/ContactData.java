@@ -50,7 +50,10 @@ public class ContactData {
         Document document = documentBuilder.parse(filename);
         document.getDocumentElement().normalize();
 
+        // get nodes wit contact tag name
         NodeList nodeList = document.getElementsByTagName("contact");
+
+        // create contact from each contact node and store to ObservableList
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             NodeList chNodes = node.getChildNodes();
@@ -62,8 +65,6 @@ public class ContactData {
             System.out.println(contact.getFirstName());
             contacts.add(contact);
         }
-
-
     }
 
     // save contacts
@@ -76,6 +77,7 @@ public class ContactData {
         Element rootElement = document.createElement("contacts");
         document.appendChild(rootElement);
 
+        // loop contact and create node for each contact
         for (Contact cont : contacts) {
             Element contact = document.createElement("contact");
             rootElement.appendChild(contact);
@@ -111,7 +113,6 @@ public class ContactData {
         // output for test
         StreamResult consoleResult = new StreamResult(System.out);
         transformer.transform(source, consoleResult);
-
     }
 
 }

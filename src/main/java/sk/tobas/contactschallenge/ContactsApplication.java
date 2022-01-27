@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sk.tobas.contactschallenge.model.Contact;
 import sk.tobas.contactschallenge.model.ContactData;
 
 import java.io.IOException;
@@ -25,8 +24,6 @@ public class ContactsApplication extends Application {
 
     @Override
     public void init() throws Exception {
-
-
         ContactData.getInstance().loadContacts();
     }
 
