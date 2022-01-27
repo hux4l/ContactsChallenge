@@ -25,19 +25,9 @@ public class ContactsApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName("Some");
-        contact.setLastName("Someone");
-        contact.setPhoneNumber("045505405");
-        contact.setNote("just to make this work");
-        ContactData.getInstance().addContact(contact);
 
-        Contact contact1 = new Contact();
-        contact1.setFirstName("Another");
-        contact1.setLastName("Man");
-        contact1.setPhoneNumber("5436548");
-        contact1.setNote("second contact to make it work");
-        ContactData.getInstance().addContact(contact);
+
+        ContactData.getInstance().loadContacts();
     }
 
     @Override

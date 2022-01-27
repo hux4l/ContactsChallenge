@@ -2,15 +2,13 @@ package sk.tobas.contactschallenge.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -22,7 +20,7 @@ public class ContactData {
     private static final ContactData instance = new ContactData();
     private static final String filename = "Contacts.xml";
 
-    private ObservableList<Contact> contacts;
+    private final ObservableList<Contact> contacts;
 
     // private constructor to make single instance
     private ContactData() {
@@ -45,7 +43,26 @@ public class ContactData {
     }
 
     // load contacts
-    public void loadContacts() throws IOException {
+    public void loadContacts() throws IOException, SAXException, ParserConfigurationException {
+        // get xml file
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.parse(filename);
+        document.getDocumentElement().normalize();
+
+        NodeList nodeList = document.getElementsByTagName("contact");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            NodeList chNodes = node.getChildNodes();
+            Contact contact = new Contact();
+            contact.setFirstName(chNodes.item(0).getTextContent());
+            contact.setLastName(chNodes.item(1).getTextContent());
+            contact.setPhoneNumber(chNodes.item(2).getTextContent());
+            contact.setNote(chNodes.item(3).getTextContent());
+            System.out.println(contact.getFirstName());
+            contacts.add(contact);
+        }
+
 
     }
 
@@ -60,7 +77,6 @@ public class ContactData {
         document.appendChild(rootElement);
 
         for (Contact cont : contacts) {
-            System.out.println(cont.getFirstName());
             Element contact = document.createElement("contact");
             rootElement.appendChild(contact);
 
@@ -68,7 +84,6 @@ public class ContactData {
             Element fName = document.createElement("firstname");
             fName.appendChild(document.createTextNode(cont.getFirstName()));
             contact.appendChild(fName);
-            System.out.println(fName.getTextContent());
 
             // lastname element
             Element lName = document.createElement("lastname");
@@ -86,7 +101,6 @@ public class ContactData {
             contact.appendChild(note);
         }
 
-        System.out.println(document.getChildNodes());
         // write to xml file
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
