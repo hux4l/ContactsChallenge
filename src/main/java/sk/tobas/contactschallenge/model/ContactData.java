@@ -53,7 +53,7 @@ public class ContactData {
         // get nodes wit contact tag name
         NodeList nodeList = document.getElementsByTagName("contact");
 
-        // create contact from each contact node and store to ObservableList
+        // create contact from each contact node and store to ObservableList contacts
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             NodeList chNodes = node.getChildNodes();
@@ -92,12 +92,12 @@ public class ContactData {
             lName.appendChild(document.createTextNode(cont.getLastName()));
             contact.appendChild(lName);
 
-            // firstname element
+            // phonenumber element
             Element pNumber = document.createElement("phonenumber");
             pNumber.appendChild(document.createTextNode(cont.getPhoneNumber()));
             contact.appendChild(pNumber);
 
-            // firstname element
+            // note element
             Element note = document.createElement("note");
             note.appendChild(document.createTextNode(cont.getNote()));
             contact.appendChild(note);

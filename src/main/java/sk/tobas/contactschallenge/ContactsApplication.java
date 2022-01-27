@@ -28,12 +28,13 @@ public class ContactsApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        super.init();
+        // load contacts from file on application star
         ContactData.getInstance().loadContacts();
     }
 
     @Override
     public void stop() throws Exception {
+        // save contacts to file after application close
         try {
             ContactData.getInstance().saveContacts();
         } catch (IOException e) {

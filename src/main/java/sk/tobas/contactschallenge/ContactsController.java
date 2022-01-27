@@ -15,9 +15,8 @@ public class ContactsController {
     private TableView<Contact> twContacts;
 
     public void listContacts() {
-        Task<ObservableList<Contact>> task = new GetAllContactsTask();
+        GetAllContactsTask task = new GetAllContactsTask();
         twContacts.itemsProperty().bind(task.valueProperty());
-
         new Thread(task).start();
     }
 }
@@ -27,7 +26,6 @@ class  GetAllContactsTask extends Task {
 
     @Override
     protected ObservableList<Contact> call() {
-        System.out.println("im here");
         // for data binding
         return FXCollections.observableArrayList(ContactData.getInstance().getContacts());
     }
