@@ -31,13 +31,11 @@ public class ContactsController {
         contactContextMenu = new ContextMenu();
         MenuItem editMenuItem = new MenuItem("Edit");
         editMenuItem.setOnAction(actionEvent -> {
-            Contact contact = twContacts.getSelectionModel().getSelectedItem();
             handleEdit();
         });
 
         MenuItem deleteMenuItem = new MenuItem("Delete");
         deleteMenuItem.setOnAction(actionEvent -> {
-            Contact contact = twContacts.getSelectionModel().getSelectedItem();
             handleDelete();
         });
         contactContextMenu.getItems().addAll(editMenuItem, deleteMenuItem);
