@@ -8,9 +8,9 @@
    <top>
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="Contacts">
-               <MenuItem mnemonicParsing="false" text="Add" />
-               <MenuItem mnemonicParsing="false" text="Edit" />
-               <MenuItem mnemonicParsing="false" text="Delete" />
+               <MenuItem mnemonicParsing="false" text="Add" onAction="#handleAdd"/>
+               <MenuItem mnemonicParsing="false" text="Edit" onAction="#handleEdit"/>
+               <MenuItem mnemonicParsing="false" text="Delete" onAction="#handleDelete"/>
            </Menu>
        </MenuBar>
    </top>

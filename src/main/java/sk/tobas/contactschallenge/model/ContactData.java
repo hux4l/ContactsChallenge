@@ -47,6 +47,7 @@ public class ContactData {
     public void loadContacts() throws IOException, SAXException, ParserConfigurationException {
         // get xml file
         File file = new File(filename);
+
         if (file.exists()) {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();

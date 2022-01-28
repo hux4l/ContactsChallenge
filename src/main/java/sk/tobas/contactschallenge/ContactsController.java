@@ -4,6 +4,7 @@ package sk.tobas.contactschallenge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import sk.tobas.contactschallenge.model.Contact;
@@ -18,6 +19,18 @@ public class ContactsController {
         GetAllContactsTask task = new GetAllContactsTask();
         twContacts.itemsProperty().bind(task.valueProperty());
         new Thread(task).start();
+    }
+
+    @FXML
+    public void handleAdd(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void handleEdit(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void handleDelete(ActionEvent actionEvent) {
     }
 }
 
