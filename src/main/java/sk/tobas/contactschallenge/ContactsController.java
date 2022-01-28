@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TableView;
@@ -28,6 +29,7 @@ public class ContactsController {
     public void listContacts() {
         GetAllContactsTask task = new GetAllContactsTask();
         twContacts.itemsProperty().bind(task.valueProperty());
+        twContacts.getSelectionModel().selectFirst();
         new Thread(task).start();
     }
 
@@ -100,8 +102,19 @@ public class ContactsController {
         }
     }
 
+    // delete contact
     @FXML
-    public void handleDelete(ActionEvent actionEvent) {
+    public void handleDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Contact selected = twContacts.getSelectionModel().getSelectedItem();
+        alert.setTitle("Deleting contact");
+        alert.setHeaderText("Are you sure you want to delete " + selected.getFirstName() + " " + selected.getLastName() + " contact?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            ContactData.getInstance().deleteContact(selected);
+            listContacts();
+            twContacts.getSelectionModel().selectFirst();
+        }
     }
 }
 

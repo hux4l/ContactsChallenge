@@ -122,4 +122,8 @@ public class ContactData {
         transformer.transform(source, consoleResult);
     }
 
+    public void deleteContact(Contact contact) {
+        contacts.remove(contact);
+    }
+
 }
