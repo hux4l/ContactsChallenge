@@ -4,13 +4,9 @@ package sk.tobas.contactschallenge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import sk.tobas.contactschallenge.model.Contact;
 import sk.tobas.contactschallenge.model.ContactData;
@@ -25,6 +21,29 @@ public class ContactsController {
 
     @FXML
     private TableView<Contact> twContacts;
+
+    @FXML
+    private ContextMenu contactContextMenu;
+
+    public void initialize() {
+
+        // context menu
+        contactContextMenu = new ContextMenu();
+        MenuItem editMenuItem = new MenuItem("Edit");
+        editMenuItem.setOnAction(actionEvent -> {
+            Contact contact = twContacts.getSelectionModel().getSelectedItem();
+            handleEdit();
+        });
+
+        MenuItem deleteMenuItem = new MenuItem("Delete");
+        deleteMenuItem.setOnAction(actionEvent -> {
+            Contact contact = twContacts.getSelectionModel().getSelectedItem();
+            handleDelete();
+        });
+        contactContextMenu.getItems().addAll(editMenuItem, deleteMenuItem);
+        twContacts.setContextMenu(contactContextMenu);
+
+    }
 
     public void listContacts() {
         GetAllContactsTask task = new GetAllContactsTask();
@@ -86,7 +105,7 @@ public class ContactsController {
 
         // update dialog fields based on selected contact
         UpdateContactController controller = fxmlLoader.getController();
-        controller.updateDialogFileds(contact);
+        controller.updateDialogFields(contact);
 
         // add buttons to dialog
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -105,11 +124,14 @@ public class ContactsController {
     // delete contact
     @FXML
     public void handleDelete() {
+        // create alert window
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Contact selected = twContacts.getSelectionModel().getSelectedItem();
         alert.setTitle("Deleting contact");
         alert.setHeaderText("Are you sure you want to delete " + selected.getFirstName() + " " + selected.getLastName() + " contact?");
         Optional<ButtonType> result = alert.showAndWait();
+
+        // delete selected contact if ok pressed
         if (result.isPresent() && result.get() == ButtonType.OK) {
             ContactData.getInstance().deleteContact(selected);
             listContacts();

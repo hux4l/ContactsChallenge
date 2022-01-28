@@ -19,7 +19,7 @@ public class UpdateContactController {
     @FXML
     private TextArea taNotes;
 
-    public void updateDialogFileds(Contact contact) {
+    public void updateDialogFields(Contact contact) {
         // set values from selected contact
         tfFirstName.setText(contact.getFirstName());
         tfLastName.setText(contact.getLastName());

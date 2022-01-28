@@ -66,7 +66,6 @@ public class ContactData {
                 contact.setLastName(chNodes.item(1).getTextContent());
                 contact.setPhoneNumber(chNodes.item(2).getTextContent());
                 contact.setNote(chNodes.item(3).getTextContent());
-                System.out.println(contact.getFirstName());
                 contacts.add(contact);
             }
         }
@@ -117,9 +116,7 @@ public class ContactData {
         StreamResult result = new StreamResult(filename);
         transformer.transform(source, result);
 
-        // output for test
-        StreamResult consoleResult = new StreamResult(System.out);
-        transformer.transform(source, consoleResult);
+
     }
 
     public void deleteContact(Contact contact) {
