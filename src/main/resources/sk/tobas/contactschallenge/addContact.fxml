@@ -22,6 +22,4 @@
          <TextArea fx:id="taNotes" GridPane.rowIndex="3" GridPane.columnIndex="1" wrapText="true"/>
       </GridPane>
    </content>
-
-
 </DialogPane>

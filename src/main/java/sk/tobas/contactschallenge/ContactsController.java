@@ -56,13 +56,48 @@ public class ContactsController {
 
             AddContactController controller = fxmlLoader.getController();
             Contact contact = controller.createContact();
+            listContacts();
             twContacts.getSelectionModel().select(contact);
         }
-
     }
 
     @FXML
-    public void handleEdit(ActionEvent actionEvent) {
+    public void handleEdit() {
+        // get selected contact
+        Contact contact = twContacts.getSelectionModel().getSelectedItem();
+
+        // create dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(bpMain.getScene().getWindow());
+        dialog.setTitle("Update contact: " + contact.getFirstName() + " " + contact.getLastName());
+
+        // load fxml file
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("updateContact.fxml"));
+
+        // if found load dialog
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // update dialog fields based on selected contact
+        UpdateContactController controller = fxmlLoader.getController();
+        controller.updateDialogFileds(contact);
+
+        // add buttons to dialog
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        // if ok pressed update contact data
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+            contact = controller.updateContact(contact);
+            listContacts();
+            twContacts.getSelectionModel().select(contact);
+        }
     }
 
     @FXML

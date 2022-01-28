@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sk.tobas.contactschallenge.UpdateContactController">
+    <header>
+        <Label alignment="CENTER" text="update contact" fx:id="lblHeader"/>
+    </header>
+    <content>
+        <GridPane vgap="20" hgap="20">
+            <Label text="First Name:"/>
+            <TextField fx:id="tfFirstName" GridPane.columnIndex="1"/>
+
+            <Label text="Last Name:" GridPane.rowIndex="1" />
+            <TextField fx:id="tfLastName" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Phone:" GridPane.rowIndex="2" />
+            <TextField fx:id="tfPhoneNumber" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Notes:" GridPane.rowIndex="3" />
+            <TextArea fx:id="taNotes" GridPane.rowIndex="3" GridPane.columnIndex="1" wrapText="true"/>
+        </GridPane>
+    </content>
+</DialogPane>
